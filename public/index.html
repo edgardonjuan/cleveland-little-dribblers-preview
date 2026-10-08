@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080a0c">
+  <meta name="description" content="Schedules, teams, coaches, and league updates for Cleveland Little Dribblers families.">
+  <title>Cleveland Little Dribblers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/cleveland-little-dribblers-logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home" data-view-link="home" aria-label="Cleveland Little Dribblers home">
+        <img src="assets/cleveland-little-dribblers-logo.png" alt="Cleveland Little Dribblers logo">
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view-link="home">Home</button>
+        <button class="nav-link" data-view-link="schedule">Schedules</button>
+        <button class="nav-link" data-view-link="teams">Teams</button>
+        <button class="nav-link" data-view-link="coaches">Coaches</button>
+        <button class="nav-link" data-view-link="registration">Registration</button>
+      </nav>
+      <div class="header-actions">
+        <button class="button button-outline parent-login-trigger" type="button">Parent log in</button>
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
+      <button class="nav-link active" data-view-link="home">Home</button>
+      <button class="nav-link" data-view-link="schedule">Schedules</button>
+      <button class="nav-link" data-view-link="teams">Teams</button>
+      <button class="nav-link" data-view-link="coaches">Coaches</button>
+      <button class="nav-link" data-view-link="registration">Registration</button>
+      <button class="nav-link parent-login-trigger" type="button">Parent log in</button>
+    </nav>
+  </header>
+
+  <main id="main" class="page-shell">
+    <section class="view active" data-view="home" aria-labelledby="homeTitle">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-ball" aria-hidden="true">●</span> Cleveland, Texas · Youth Basketball</p>
+          <h1 id="homeTitle">Big energy.<br><span>Little dribblers.</span></h1>
+          <p class="hero-description">Your home for league schedules, team details, coach contacts, and season updates.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" data-view-link="schedule" type="button">Find a game <span aria-hidden="true">→</span></button>
+            <button class="button button-quiet parent-login-trigger" type="button"><span aria-hidden="true">⌑</span> Parent access</button>
+          </div>
+          <div class="season-note"><span class="live-dot"></span> Season information will be posted here</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="court-line court-line-one"></div>
+          <div class="court-line court-line-two"></div>
+          <div class="hero-orb"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="48"/><path d="M12 60h96M60 12c19 16 29 32 29 48s-10 32-29 48M60 12C41 28 31 44 31 60s10 32 29 48M26 28c16 9 29 13 34 13s18-4 34-13M26 92c16-9 29-13 34-13s18 4 34 13"/></svg></div>
+          <span class="hero-art-label">PLAY<br>TOGETHER</span>
+        </div>
+        <div class="hero-season-tag"><span>LD</span><small>League<br>Dashboard</small></div>
+      </div>
+
+      <section class="announcement-bar" aria-label="League announcements">
+        <span class="announcement-icon" aria-hidden="true">!</span>
+        <div><strong>League updates</strong><span id="announcementText">No urgent updates have been posted.</span></div>
+        <span class="announcement-status">CURRENT</span>
+      </section>
+
+      <div class="section-heading">
+        <div><p class="eyebrow">Start here</p><h2>Quick links</h2></div>
+        <span class="section-caption">Everything families need, in one place</span>
+      </div>
+      <div class="quick-grid">
+        <button class="quick-card" data-view-link="schedule" type="button"><span class="quick-icon red"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h7"/></svg></span><span class="quick-copy"><b>Schedules</b><small>Games and practices</small></span><span class="card-arrow">↗</span></button>
+        <button class="quick-card" data-view-link="teams" type="button"><span class="quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.4-4 2.6-6 6.5-6s6.1 2 6.5 6M16 5.2a3.2 3.2 0 0 1 0 6.2M17 14c2.7.5 4.2 2.5 4.5 5.5"/></svg></span><span class="quick-copy"><b>Teams & rosters</b><small>Find your team</small></span><span class="card-arrow">↗</span></button>
+        <button class="quick-card" data-view-link="coaches" type="button"><span class="quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h10.5a4.5 4.5 0 0 1 0 9H12l-4 3v-3.3A4.5 4.5 0 0 1 4 8Z"/><path d="M9 11h.01M13 11h.01M17 11h.01"/></svg></span><span class="quick-copy"><b>Coaches</b><small>Meet the league staff</small></span><span class="card-arrow">↗</span></button>
+        <button class="quick-card" data-view-link="registration" type="button"><span class="quick-icon red"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14v15H5zM8 8h8M8 12h5M8 16h2"/><path d="m15 15 2 2 4-5"/></svg></span><span class="quick-copy"><b>Registration</b><small>Player sign-up information</small></span><span class="card-arrow">↗</span></button>
+      </div>
+
+      <div class="home-columns">
+        <section class="content-panel next-game-panel" aria-labelledby="nextGameTitle">
+          <div class="panel-heading"><div><p class="eyebrow">On the court</p><h2 id="nextGameTitle">Next game</h2></div><span class="panel-icon" aria-hidden="true">🏀</span></div>
+          <div class="empty-feature"><span class="empty-symbol">⌖</span><div><strong>Game details are coming soon</strong><p>The next scheduled game will appear here once the league schedule is connected.</p></div></div>
+          <button class="text-button" data-view-link="schedule" type="button">View full schedule <span aria-hidden="true">→</span></button>
+        </section>
+        <section class="content-panel registration-promo" aria-labelledby="registrationTitle">
+          <div class="registration-promo-top"><span class="eyebrow">Join the team</span><span class="registration-stamp">NEXT<br><b>SEASON</b></span></div>
+          <h2 id="registrationTitle">Ready to play?</h2>
+          <p>Registration information and online payment will be available here when sign-up opens.</p>
+          <button class="button button-primary" data-view-link="registration" type="button">Registration details <span aria-hidden="true">→</span></button>
+        </section>
+      </div>
+
+      <section class="updates-section">
+        <div class="section-heading"><div><p class="eyebrow">Stay in the loop</p><h2>League updates</h2></div><span class="section-caption">News from the league</span></div>
+        <div class="content-panel update-empty"><span class="update-icon">↗</span><div><strong>Nothing new just yet</strong><p>Official league announcements will show here as they are added.</p></div></div>
+      </section>
+    </section>
+
+    <section class="view" data-view="schedule" aria-labelledby="scheduleTitle" hidden>
+      <div class="page-intro"><p class="eyebrow">Plan your game day</p><h1 id="scheduleTitle">Schedules</h1><p>Find games and practices by team or age group.</p></div>
+      <div class="filter-row">
+        <label>Team<select id="teamFilter"><option value="all">All teams</option></select></label>
+        <label>Division / age group<select id="divisionFilter"><option value="all">All divisions</option></select></label>
+        <div class="schedule-tabs" role="tablist" aria-label="Schedule type"><button class="schedule-tab active" data-kind="game" role="tab" aria-selected="true">Games</button><button class="schedule-tab" data-kind="practice" role="tab" aria-selected="false">Practices</button></div>
+        <button class="button button-outline export-button" id="exportButton" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 16v4h14v-4"/></svg> Export to Google Calendar</button>
+      </div>
+      <div class="schedule-list content-panel" id="scheduleList"><div class="empty-state"><span class="empty-state-icon">◷</span><h2>Schedule will be posted soon</h2><p>When the league schedule is published, games and practices will appear here.</p></div></div>
+    </section>
+
+    <section class="view" data-view="teams" aria-labelledby="teamsTitle" hidden>
+      <div class="page-intro"><p class="eyebrow">Meet the teams</p><h1 id="teamsTitle">Teams & rosters</h1><p>Browse teams by division. Public rosters will show first names only.</p></div>
+      <div class="division-grid" id="divisionGrid"><article class="division-card content-panel"><span class="division-icon">◉</span><h2>Teams will appear here</h2><p>Team and division details will load from the league records after Quickbase is connected.</p></article></div>
+      <p class="privacy-callout"><span aria-hidden="true">♧</span> Player details are kept private. Public pages will show only approved roster information.</p>
+    </section>
+
+    <section class="view" data-view="coaches" aria-labelledby="coachesTitle" hidden>
+      <div class="page-intro"><p class="eyebrow">The people behind the game</p><h1 id="coachesTitle">Coaches directory</h1><p>Find a coach and reach out through the league-approved contact method.</p></div>
+      <div class="coach-grid" id="coachGrid"><article class="coach-placeholder content-panel"><span class="coach-placeholder-icon">♟</span><div><h2>Coach directory coming soon</h2><p>Coach names, team assignments, and safe contact links will appear here.</p></div></article></div>
+      <div class="safe-contact-note"><strong>Contact privacy</strong><span>Personal phone numbers and email addresses will not be displayed publicly.</span></div>
+    </section>
+
+    <section class="view" data-view="registration" aria-labelledby="registrationPageTitle" hidden>
+      <div class="page-intro"><p class="eyebrow">Get in the game</p><h1 id="registrationPageTitle">Player registration</h1><p>Registration details and payment options will be posted here when sign-up opens.</p></div>
+      <div class="registration-layout">
+        <section class="content-panel registration-card"><span class="registration-card-icon">✳</span><p class="eyebrow">For players and families</p><h2>Sign-up is being prepared</h2><p>The league is setting up an easy mobile registration flow. When ready, families will complete the registration form and pay through a secure checkout page.</p><ul class="registration-steps"><li><span>01</span> Share player and guardian details</li><li><span>02</span> Review registration information</li><li><span>03</span> Complete secure online payment</li></ul><button class="button button-primary" type="button" disabled>Registration opening soon</button><p class="form-note">This preview does not collect or submit personal information.</p></section>
+        <aside class="content-panel registration-aside"><span class="eyebrow">Questions?</span><h2>We're here to help.</h2><p>League contact information will be published here.</p><div class="contact-placeholder"><span>✉</span><span>League contact details coming soon</span></div></aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><a class="footer-brand" href="#home" data-view-link="home"><img src="assets/cleveland-little-dribblers-logo.png" alt=""><span>Cleveland Little Dribblers</span></a><p>Made for players, families, and the Cleveland basketball community.</p><span class="footer-draft">Website preview · League data not connected</span></div></footer>
+
+  <div class="theme-dock"><span class="theme-dock-label">Appearance</span><button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span id="themeLabel">Dark mode</span><span class="toggle-track" aria-hidden="true"><i></i></span></button></div>
+
+  <dialog class="login-dialog" id="parentLoginDialog" aria-labelledby="loginTitle">
+    <button class="dialog-close" id="loginClose" type="button" aria-label="Close sign-in">×</button>
+    <div class="login-mark"><img src="assets/cleveland-little-dribblers-logo.png" alt=""></div>
+    <p class="eyebrow">Parent & guardian access</p>
+    <h2 id="loginTitle">Your player’s season, all in one place.</h2>
+    <p class="login-description">Enter the player’s last name and date of birth. We’ll send a verification code to the guardian contact on file.</p>
+    <form id="loginForm">
+      <label for="parentKey">Last name + date of birth</label>
+      <input id="parentKey" name="parentKey" type="text" autocomplete="off" placeholder="LastNameMMDDYYYY" aria-describedby="loginFormat loginStatus" required>
+      <small id="loginFormat">Format: LastNameMMDDYYYY</small>
+      <button class="button button-primary login-submit" type="submit">Continue securely <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="login-status" id="loginStatus" role="status" aria-live="polite">Secure parent sign-in is not connected yet. You can still browse public league information.</p>
+    <button class="public-browse" id="browsePublic" type="button">Continue to public information</button>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
