@@ -1,7 +1,11 @@
-# Cleveland Little Dribblers Preview
+# Cleveland Little Dribblers design preview
 
-A static visual preview of the league website for families.
+Public bulletin with sample league dates and announcements, plus parent and coach portal design previews.
 
-Preview: https://edgardonjuan.github.io/cleveland-little-dribblers-preview/
+https://edgardonjuan.github.io/cleveland-little-dribblers-preview/
 
-This prototype does not connect to player records, authenticate parent accounts, or process payments. It contains no live league data.
+Use the top-right Sign in button to explore each portal. All records are fictional. Coach changes stay in memory, can be viewed in the parent preview, and reset on reload. No authentication, Quickbase connection, or emails. No online payments.
+
+Never put real player records, guardian details, or credentials in this repository. Live portals must enforce server-side access controls before private data is connected.
+
+Source changes: https://github.com/edgardonjuan/cleveland-little-dribblers/pull/1
