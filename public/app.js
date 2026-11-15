@@ -2,7 +2,8 @@
  * No account authentication, private records, email delivery, or Quickbase writes.
  * Demo edits live in memory only and reset on reload. A live portal must enforce
  * guardian/player and coach/team authorization in its server API on every request;
- * the role picker here is not an authorization mechanism.
+ * the view picker here is not an authorization mechanism. One identity may have
+ * both roles; only the league can approve coach assignments in production.
  */
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -35,6 +36,8 @@ let teamNews = [
   { id: "sample-news-1", team: "bandits", title: "Ready for our first practice?", body: "Bring a basketball, athletic shoes, and a water bottle. We're looking forward to getting the team on the court!", pinned: true, date: "2026-11-14" },
   { id: "sample-news-2", team: "falcons", title: "A quick reminder for game day", body: "Please arrive 20 minutes early so we can warm up together. Check the schedule for our court and game time.", pinned: false, date: "2026-11-13" },
 ];
+let previewActive = false;
+const previewAccount = { email: "parker@example.com", roles: ["parent", "coach"] };
 let view = "public", previewRole = "parent", selectedPlayer = "all", selectedKind = "all", coachPanel = "schedule", sequence = 10;
 const coachTeam = "bandits";
 function day(date) { return new Date(`${date}T12:00:00`); }
@@ -79,11 +82,17 @@ function renderCoach() {
   $("#coachAnnouncements").innerHTML = sortedNews(teamNews.filter(n => n.team === coachTeam)).map(n => newsCard(n, true)).join("") || emptyState("A fresh start", "Write an announcement to keep your team's families in the loop.");
 }
 function showView(next) {
+  if (next !== "public" && (!previewActive || !previewAccount.roles.includes(next))) return;
   view = next;
   for (const name of ["public", "parent", "coach"]) $(`#${name}View`).hidden = name !== next;
   $("#publicNav").hidden = next !== "public";
-  $("#signIn").hidden = next !== "public";
-  $("#signOut").hidden = next === "public";
+  $("#signIn").hidden = previewActive;
+  $("#signOut").hidden = !previewActive;
+  $("#accountToolbar").hidden = !previewActive;
+  $$("[data-view]").forEach(button => {
+    button.hidden = !previewAccount.roles.includes(button.dataset.view);
+    button.setAttribute("aria-pressed", String(button.dataset.view === next));
+  });
   if (next === "parent") renderParent();
   if (next === "coach") renderCoach();
   history.replaceState(null, "", location.pathname + location.search);
@@ -97,15 +106,17 @@ function selectCoachPanel(panel) {
   $("#coachNewsPanel").hidden = panel !== "news";
 }
 function selectRole(role) {
+  if (!previewAccount.roles.includes(role)) return;
   previewRole = role;
   $$("[data-role]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.role === role)));
-  $("#previewEmail").value = `${role}@example.com`;
-  $("#enterPreview").innerHTML = `Preview ${role} portal <span aria-hidden="true">→</span>`;
+  $("#previewEmail").value = previewAccount.email;
+  $("#enterPreview").innerHTML = `Preview ${role === "parent" ? "my players" : "coach dashboard"} <span aria-hidden="true">→</span>`;
 }
 $("#signIn").addEventListener("click", () => { selectRole("parent"); $("#loginDialog").showModal(); });
-$("#enterPreview").addEventListener("click", () => { $("#loginDialog").close(); selectedPlayer = "all"; selectedKind = "all"; $$("[data-kind]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kind === "all"))); selectCoachPanel("schedule"); showView(previewRole); });
+$("#enterPreview").addEventListener("click", () => { $("#loginDialog").close(); previewActive = true; selectedPlayer = "all"; selectedKind = "all"; $$("[data-kind]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kind === "all"))); selectCoachPanel("schedule"); showView(previewRole); });
 $$("[data-role]").forEach(b => b.addEventListener("click", () => selectRole(b.dataset.role)));
-$("#signOut").addEventListener("click", () => { showView("public"); $("#signIn").focus(); });
+$$("[data-view]").forEach(button => button.addEventListener("click", () => showView(button.dataset.view)));
+$("#signOut").addEventListener("click", () => { previewActive = false; showView("public"); $("#signIn").focus(); });
 $$(".back-to-league").forEach(b => b.addEventListener("click", () => showView("public")));
 $("#brandHome").addEventListener("click", e => { e.preventDefault(); showView("public"); });
 $$("[data-close]").forEach(b => b.addEventListener("click", () => document.getElementById(b.dataset.close).close()));
@@ -145,7 +156,7 @@ eventForm.addEventListener("submit", e => {
   if (!values.location.trim() || (values.kind === "game" && !values.opponent.trim())) { $("#eventError").textContent = "Add a location and, for games, an opponent."; return; }
   const row = { id: current?.id || `sample-event-${++sequence}`, team: coachTeam, kind: values.kind, date: values.date, start: values.start, end: values.end, location: values.location.trim(), opponent: values.kind === "game" ? values.opponent.trim() : "", notes: values.notes.trim(), cancelled: current?.cancelled || false };
   if (current) events = events.map(x => x.id === current.id ? row : x); else events.push(row);
-  $("#eventDialog").close(); selectCoachPanel("schedule"); renderCoach(); showToast("Sample event saved. Open the parent preview to see it; no families were notified.");
+  $("#eventDialog").close(); selectCoachPanel("schedule"); renderCoach(); showToast("Sample event saved. Select My players to see it; no families were notified.");
 });
 function openAnnouncement(id = "") {
   if (view !== "coach") return;

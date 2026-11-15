@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/cleveland-little-dribblers-logo.png">
-  <link rel="stylesheet" href="styles.css?v=20261114">
-  <script defer src="app.js?v=20261114"></script>
+  <link rel="stylesheet" href="styles.css?v=20261115">
+  <script defer src="app.js?v=20261115"></script>
 </head>
 <body data-theme="dark">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -19,7 +19,7 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="#" aria-label="Cleveland Little Dribblers home" id="brandHome"><img src="assets/cleveland-little-dribblers-logo.png" alt="Cleveland Little Dribblers"></a>
-      <nav id="publicNav" class="public-nav" aria-label="Main navigation"><a href="#dates">League dates</a><a href="#announcements">Announcements</a></nav>
+      <nav id="publicNav" class="public-nav" aria-label="Main navigation"><a href="#dates">League dates</a></nav>
       <div class="header-actions">
         <button id="themeToggle" class="icon-button" aria-label="Switch to light mode" title="Switch to light mode" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
         <button id="signIn" class="button primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Sign in</span><svg class="button-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></button>
@@ -29,6 +29,13 @@
   </header>
 
   <main id="main" class="page-shell" tabindex="-1">
+    <div id="accountToolbar" class="account-toolbar" hidden>
+      <div class="account-summary"><span class="avatar" aria-hidden="true">P</span><div><strong>Parker family</strong><span>Parent & coach · Sample account</span></div></div>
+      <div class="portal-switcher" role="group" aria-label="Switch account view">
+        <button type="button" data-view="parent" aria-pressed="false">My players</button>
+        <button type="button" data-view="coach" aria-pressed="false">Coach dashboard</button>
+      </div>
+    </div>
     <section id="publicView" aria-labelledby="publicTitle">
       <div class="hero">
         <div class="hero-copy"><p class="eyebrow"><span class="red-dash"></span> CLEVELAND, TEXAS · YOUTH BASKETBALL</p><h1 id="publicTitle">Big energy.<br><span>Little dribblers.</span></h1><p class="hero-description">The dates to circle. The news to know. <br>Your connection to everything happening around the league.</p><a class="button primary" href="#dates">See what's coming up <span aria-hidden="true">↓</span></a></div>
@@ -70,17 +77,17 @@
       <div class="coach-tabs" role="tablist" aria-label="Coach workspace"><button type="button" id="scheduleTab" role="tab" aria-selected="true" aria-controls="coachSchedulePanel">Team schedule <span id="scheduleCount"></span></button><button type="button" id="newsTab" role="tab" aria-selected="false" aria-controls="coachNewsPanel" tabindex="-1">Team announcements <span id="newsCount"></span></button></div>
       <section id="coachSchedulePanel" role="tabpanel" aria-labelledby="scheduleTab"><div class="workspace-heading"><div><h2>Practices & games</h2><p>Events you add here appear in your team's parent schedule.</p></div><span class="time-note">Central Time</span></div><div id="coachSchedule" class="coach-schedule"></div></section>
       <section id="coachNewsPanel" role="tabpanel" aria-labelledby="newsTab" hidden><div class="workspace-heading"><div><h2>Keep your team in the loop</h2><p>Team announcements are visible to your team's families.</p></div><button id="addAnnouncement" class="button primary" type="button"><span aria-hidden="true">＋</span>Write announcement</button></div><div id="coachAnnouncements" class="coach-news-grid"></div></section>
-      <div class="preview-note"><b>Try it out.</b> Add or edit sample events and announcements, then open the parent preview to see the changes. Changes stay in this page until you reload; no families are notified.</div>
+      <div class="preview-note"><b>Try it out.</b> Add or edit sample events and announcements, then select My players above to see the changes. Changes stay in this page until you reload; no families are notified.</div>
     </section>
   </main>
 
   <footer class="site-footer"><div class="footer-inner"><div class="footer-wordmark"><span class="cld-badge">CLD</span><span>Cleveland Little Dribblers<small>Cleveland, Texas</small></span></div><p>For the love of the game. For our community.</p><span class="footer-preview">DESIGN PREVIEW · SAMPLE CONTENT</span></div></footer>
 
   <dialog id="loginDialog" aria-labelledby="loginTitle" class="login-dialog">
-    <button class="dialog-close" data-close="loginDialog" type="button" aria-label="Close sign-in">×</button><span class="cld-badge">CLD</span><p class="eyebrow">PARENTS & COACHES</p><h2 id="loginTitle">Your season starts here.</h2><p class="dialog-intro">Choose your portal to explore the design.</p>
-    <div class="role-picker" role="group" aria-label="Choose portal"><button type="button" data-role="parent" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 8a3 3 0 0 1 0 6M18 17a4 4 0 0 1 3 4"/></svg><strong>I'm a parent</strong><span>My players & schedules</span></button><button type="button" data-role="coach" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v4H9zM9 12h6M9 16h4"/></svg><strong>I'm a coach</strong><span>My team & announcements</span></button></div>
-    <label class="field-label" for="previewEmail">Email address</label><input id="previewEmail" type="email" value="parent@example.com" readonly aria-describedby="loginNote">
-    <p id="loginNote" class="form-help">Example account only. Live sign-in will verify your approved email and assigned access.</p><button class="button primary full-width" id="enterPreview" type="button">Preview parent portal <span aria-hidden="true">→</span></button><p class="demo-disclaimer">Design preview · No real account or verification code required.</p>
+    <button class="dialog-close" data-close="loginDialog" type="button" aria-label="Close sign-in">×</button><span class="cld-badge">CLD</span><p class="eyebrow">PARENTS & COACHES</p><h2 id="loginTitle">Your season starts here.</h2><p class="dialog-intro">One account for your family and your team. Choose where to start.</p>
+    <div class="role-picker" role="group" aria-label="Choose starting view"><button type="button" data-role="parent" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 8a3 3 0 0 1 0 6M18 17a4 4 0 0 1 3 4"/></svg><strong>My players</strong><span>Family schedules & news</span></button><button type="button" data-role="coach" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v4H9zM9 12h6M9 16h4"/></svg><strong>Coach dashboard</strong><span>Manage my assigned team</span></button></div>
+    <label class="field-label" for="previewEmail">Email address</label><input id="previewEmail" type="email" value="parker@example.com" readonly aria-describedby="loginNote">
+    <p id="loginNote" class="form-help">This sample account has both parent and coach access. In the live site, league-approved access will determine which views appear.</p><button class="button primary full-width" id="enterPreview" type="button">Preview my players <span aria-hidden="true">→</span></button><p class="demo-disclaimer">Design preview · No real account or verification code required.</p>
   </dialog>
 
   <dialog id="eventDialog" aria-labelledby="eventDialogTitle" class="editor-dialog"><button class="dialog-close" data-close="eventDialog" type="button" aria-label="Close event editor">×</button><p class="eyebrow">BANDITS · TEAM SCHEDULE</p><h2 id="eventDialogTitle">Add an event</h2><p class="dialog-intro">Help your families plan their week.</p><form id="eventForm"><input type="hidden" name="id"><div class="form-grid"><label>Event type<select name="kind" required><option value="practice">Practice</option><option value="game">Game</option></select></label><label>Date<input type="date" name="date" required></label><label>Start time<input type="time" name="start" required></label><label>End time<input type="time" name="end" required></label><label class="full">Location<input name="location" maxlength="100" placeholder="Gym or venue name" required></label><label id="opponentField" class="full" hidden>Opponent<input name="opponent" maxlength="60" placeholder="Opposing team"></label><label class="full">Notes <span class="optional">(optional)</span><textarea name="notes" rows="3" maxlength="500" placeholder="Arrival time, what to bring, or other details"></textarea></label></div><p id="eventError" class="form-error" role="alert"></p><p class="form-help">All times are Central Time. Saves sample data in this preview only.</p><div class="form-actions"><button class="button outline" data-close="eventDialog" type="button">Cancel</button><button class="button primary" type="submit">Save sample event</button></div></form></dialog>
