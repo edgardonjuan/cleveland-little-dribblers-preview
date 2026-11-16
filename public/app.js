@@ -38,7 +38,7 @@ let teamNews = [
 ];
 let previewActive = false;
 const previewAccount = { email: "parker@example.com", roles: ["parent", "coach"] };
-let view = "public", previewRole = "parent", selectedPlayer = "all", selectedKind = "all", coachPanel = "schedule", sequence = 10;
+let view = "public", selectedPlayer = "all", selectedKind = "all", coachPanel = "schedule", sequence = 10;
 const coachTeam = "bandits";
 function day(date) { return new Date(`${date}T12:00:00`); }
 function formatDate(date, options = { weekday: "short", month: "short", day: "numeric" }) { return new Intl.DateTimeFormat("en-US", options).format(day(date)); }
@@ -105,16 +105,20 @@ function selectCoachPanel(panel) {
   $("#coachSchedulePanel").hidden = panel !== "schedule";
   $("#coachNewsPanel").hidden = panel !== "news";
 }
-function selectRole(role) {
-  if (!previewAccount.roles.includes(role)) return;
-  previewRole = role;
-  $$("[data-role]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.role === role)));
+$("#signIn").addEventListener("click", () => {
   $("#previewEmail").value = previewAccount.email;
-  $("#enterPreview").innerHTML = `Preview ${role === "parent" ? "my players" : "coach dashboard"} <span aria-hidden="true">→</span>`;
-}
-$("#signIn").addEventListener("click", () => { selectRole("parent"); $("#loginDialog").showModal(); });
-$("#enterPreview").addEventListener("click", () => { $("#loginDialog").close(); previewActive = true; selectedPlayer = "all"; selectedKind = "all"; $$("[data-kind]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kind === "all"))); selectCoachPanel("schedule"); showView(previewRole); });
-$$("[data-role]").forEach(b => b.addEventListener("click", () => selectRole(b.dataset.role)));
+  $("#loginDialog").showModal();
+  $("#loginTitle").focus({ preventScroll: true });
+});
+$("#enterPreview").addEventListener("click", () => {
+  $("#loginDialog").close();
+  previewActive = true;
+  selectedPlayer = "all";
+  selectedKind = "all";
+  $$("[data-kind]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kind === "all")));
+  selectCoachPanel("schedule");
+  showView(previewAccount.roles.includes("parent") ? "parent" : "coach");
+});
 $$("[data-view]").forEach(button => button.addEventListener("click", () => showView(button.dataset.view)));
 $("#signOut").addEventListener("click", () => { previewActive = false; showView("public"); $("#signIn").focus(); });
 $$(".back-to-league").forEach(b => b.addEventListener("click", () => showView("public")));
