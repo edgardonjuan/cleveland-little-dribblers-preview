@@ -41,7 +41,7 @@ let previewActive = false;
 const previewAccount = { email: "parker@example.com", roles: ["parent", "coach"] };
 let view = "public", selectedPlayer = "all", selectedKind = "all", coachPanel = "schedule", sequence = 10;
 const coachTeam = "bandits";
-const calendarState = { parent: { month: centralToday().slice(0, 7), date: "", visible: true }, coach: { month: centralToday().slice(0, 7), date: "", visible: true } };
+const calendarState = { parent: { month: centralToday().slice(0, 7), date: "", visible: false }, coach: { month: centralToday().slice(0, 7), date: "", visible: false } };
 let calendarExport = null;
 function day(date) { return new Date(`${date}T12:00:00`); }
 function formatDate(date, options = { weekday: "short", month: "short", day: "numeric" }) { return new Intl.DateTimeFormat("en-US", options).format(day(date)); }
