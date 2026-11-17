@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/cleveland-little-dribblers-logo.png">
-  <link rel="stylesheet" href="styles.css?v=20261116">
-  <script defer src="app.js?v=20261116"></script>
+  <link rel="stylesheet" href="styles.css?v=20261117">
+  <script type="module" src="app.js?v=20261117"></script>
 </head>
 <body data-theme="dark">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -64,6 +64,7 @@
         <section aria-labelledby="familyScheduleTitle">
           <div class="section-heading"><div><p class="eyebrow">ON THE CALENDAR</p><h2 id="familyScheduleTitle">Family schedule</h2></div><button class="text-button" id="allPlayers" type="button">Show all players</button></div>
           <div class="schedule-toolbar"><div class="segmented" role="group" aria-label="Filter schedule"><button type="button" data-kind="all" aria-pressed="true">All events</button><button type="button" data-kind="practice" aria-pressed="false">Practices</button><button type="button" data-kind="game" aria-pressed="false">Games</button></div><span class="time-note">Central Time</span></div>
+          <div id="familyCalendar" class="schedule-calendar" aria-label="Family calendar"></div>
           <div id="familySchedule" class="schedule-list" aria-live="polite"></div>
         </section>
         <aside aria-labelledby="teamNewsTitle"><div class="section-heading"><div><p class="eyebrow">FROM YOUR COACHES</p><h2 id="teamNewsTitle">Team announcements</h2></div></div><div id="parentAnnouncements" class="team-news-list" aria-live="polite"></div><div class="privacy-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4v6c0 5-8 8-8 8s-8-3-8-8V7z"/><path d="m8 12 3 3 5-5"/></svg><p>When live, only your approved players and their team information will appear here.</p></div></aside>
@@ -75,7 +76,7 @@
       <div class="portal-heading"><div><p class="eyebrow">LESS ADMIN. MORE BASKETBALL.</p><h1 id="coachTitle" tabindex="-1">Your team headquarters.</h1><p>Keep your families ready for the next practice and game.</p></div><button class="button primary" id="addEvent" type="button"><span aria-hidden="true">＋</span>Add an event</button></div>
       <div class="team-banner"><span class="team-emblem" aria-hidden="true">B</span><div><h2>Bandits</h2><p>Rookies · Sample team</p></div><span class="assigned-label"><span class="status-dot"></span>YOUR ASSIGNED TEAM</span></div>
       <div class="coach-tabs" role="tablist" aria-label="Coach workspace"><button type="button" id="scheduleTab" role="tab" aria-selected="true" aria-controls="coachSchedulePanel">Team schedule <span id="scheduleCount"></span></button><button type="button" id="newsTab" role="tab" aria-selected="false" aria-controls="coachNewsPanel" tabindex="-1">Team announcements <span id="newsCount"></span></button></div>
-      <section id="coachSchedulePanel" role="tabpanel" aria-labelledby="scheduleTab"><div class="workspace-heading"><div><h2>Practices & games</h2><p>Events you add here appear in your team's parent schedule.</p></div><span class="time-note">Central Time</span></div><div id="coachSchedule" class="coach-schedule"></div></section>
+      <section id="coachSchedulePanel" role="tabpanel" aria-labelledby="scheduleTab"><div class="workspace-heading"><div><h2>Practices & games</h2><p>Events you add here appear in your team's parent schedule.</p></div><span class="time-note">Central Time</span></div><div id="coachCalendar" class="schedule-calendar" aria-label="Team calendar"></div><div id="coachSchedule" class="coach-schedule"></div></section>
       <section id="coachNewsPanel" role="tabpanel" aria-labelledby="newsTab" hidden><div class="workspace-heading"><div><h2>Keep your team in the loop</h2><p>Team announcements are visible to your team's families.</p></div><button id="addAnnouncement" class="button primary" type="button"><span aria-hidden="true">＋</span>Write announcement</button></div><div id="coachAnnouncements" class="coach-news-grid"></div></section>
       <div class="preview-note"><b>Try it out.</b> Add or edit sample events and announcements, then select My players above to see the changes. Changes stay in this page until you reload; no families are notified.</div>
     </section>
@@ -99,6 +100,24 @@
   <dialog id="eventDialog" aria-labelledby="eventDialogTitle" class="editor-dialog"><button class="dialog-close" data-close="eventDialog" type="button" aria-label="Close event editor">×</button><p class="eyebrow">BANDITS · TEAM SCHEDULE</p><h2 id="eventDialogTitle">Add an event</h2><p class="dialog-intro">Help your families plan their week.</p><form id="eventForm"><input type="hidden" name="id"><div class="form-grid"><label>Event type<select name="kind" required><option value="practice">Practice</option><option value="game">Game</option></select></label><label>Date<input type="date" name="date" required></label><label>Start time<input type="time" name="start" required></label><label>End time<input type="time" name="end" required></label><label class="full">Location<input name="location" maxlength="100" placeholder="Gym or venue name" required></label><label id="opponentField" class="full" hidden>Opponent<input name="opponent" maxlength="60" placeholder="Opposing team"></label><label class="full">Notes <span class="optional">(optional)</span><textarea name="notes" rows="3" maxlength="500" placeholder="Arrival time, what to bring, or other details"></textarea></label></div><p id="eventError" class="form-error" role="alert"></p><p class="form-help">All times are Central Time. Saves sample data in this preview only.</p><div class="form-actions"><button class="button outline" data-close="eventDialog" type="button">Cancel</button><button class="button primary" type="submit">Save sample event</button></div></form></dialog>
 
   <dialog id="announcementDialog" aria-labelledby="announcementDialogTitle" class="editor-dialog"><button class="dialog-close" data-close="announcementDialog" type="button" aria-label="Close announcement editor">×</button><p class="eyebrow">BANDITS · TEAM ANNOUNCEMENT</p><h2 id="announcementDialogTitle">A note for your team.</h2><p class="dialog-intro">Visible to Bandits families in their parent portal.</p><form id="announcementForm"><input type="hidden" name="id"><label>Title<input name="title" maxlength="100" placeholder="What would you like families to know?" required></label><label>Message<textarea name="body" rows="5" maxlength="2000" placeholder="Write your team announcement…" required></textarea></label><label class="checkbox-label"><input type="checkbox" name="pinned">Pin this announcement to the top</label><p id="announcementError" class="form-error" role="alert"></p><p class="form-help">Saves sample data in this preview only. No message is sent.</p><div class="form-actions"><button class="button outline" data-close="announcementDialog" type="button">Cancel</button><button class="button primary" type="submit">Save sample announcement</button></div></form></dialog>
+
+  <dialog id="calendarExportDialog" aria-labelledby="calendarExportTitle" class="editor-dialog calendar-export-dialog">
+    <button class="dialog-close" data-close="calendarExportDialog" type="button" aria-label="Close calendar export">×</button>
+    <p class="eyebrow">ADD TO MY CALENDAR</p><h2 id="calendarExportTitle" tabindex="-1">Take your schedule with you.</h2>
+    <p id="exportAudience" class="dialog-intro"></p>
+    <div id="exportControls">
+      <fieldset class="export-kinds"><legend>Include</legend><label class="checkbox-label"><input id="exportGames" type="checkbox" checked>Games</label><label class="checkbox-label"><input id="exportPractices" type="checkbox" checked>Practices</label></fieldset>
+      <label class="field-label" for="exportScope">Date range</label><select id="exportScope"><option value="all">Entire schedule · all dates</option></select>
+    </div>
+    <p id="exportCount" class="export-count" role="status"></p><ul id="exportEventList" class="export-event-list"></ul>
+    <p id="exportError" class="form-error" role="alert"></p>
+    <button id="downloadCalendar" class="button primary full-width" type="button">Download calendar file (.ics) <span aria-hidden="true">↓</span></button>
+    <p class="form-help">Open the downloaded file in your calendar app and confirm the import. For Google Calendar, use Settings → Import &amp; export on a computer.</p>
+    <details class="calendar-import-help"><summary>Import help</summary><p><a href="https://support.google.com/calendar/answer/37118?hl=en" target="_blank" rel="noopener noreferrer">Google Calendar ↗</a><a href="https://support.apple.com/guide/calendar/import-or-export-calendars-icl1023/mac" target="_blank" rel="noopener noreferrer">Apple Calendar ↗</a><a href="https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web" target="_blank" rel="noopener noreferrer">Outlook ↗</a></p></details>
+    <div class="preview-note"><b>One-time copy.</b> Schedule changes and cancellations won't sync automatically. Re-importing may create duplicates. Cancelled events are excluded.</div>
+    <p class="demo-disclaimer">Sample events only · Exported titles are marked CLD PREVIEW.</p>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

@@ -20,3 +20,59 @@ dialog{position:fixed;background:var(--surface);color:var(--text);border:1px sol
 /* Unified entry: approved account views are available after sign-in. */
 .login-dialog h2{font-size:32px;line-height:1.08;letter-spacing:-.04em}.login-dialog h2:focus{outline:none}.login-dialog .dialog-intro{line-height:1.65;margin-bottom:25px}.login-access-note{display:flex;align-items:flex-start;gap:11px;padding-top:20px;margin-top:22px;border-top:1px solid var(--line)}.login-access-note svg{width:18px;height:18px;color:var(--accent);margin-top:2px}.login-access-note p{font-size:11px;line-height:1.7;color:var(--muted)}.login-access-note strong{display:block;font-size:12px;color:var(--text);margin-bottom:4px}.login-dialog .demo-disclaimer{margin-top:20px}
 @media(max-width:540px){.login-dialog h2{font-size:29px}.login-dialog .dialog-intro{font-size:12px;margin-bottom:21px}.login-access-note{margin-top:20px;padding-top:17px}}
+
+/* Month calendars and portable calendar export. */
+.schedule-calendar{margin:0 0 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.calendar-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:17px 18px 12px}
+.calendar-top h3{font-size:19px;letter-spacing:-.025em}
+.calendar-nav{display:flex;align-items:center;gap:7px}
+.calendar-nav .text-button{padding:8px;margin-right:3px}
+.calendar-nav .small-button{font-size:24px;line-height:1;width:38px;min-height:38px;padding:3px}
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:0 10px}
+.calendar-weekdays span{text-align:center;font-size:10px;color:var(--faint);font-weight:600;padding:10px 0}
+.calendar-grid{gap:3px}
+.calendar-day{background:var(--bg);color:var(--text);min-width:0;min-height:77px;border:1px solid transparent;border-radius:7px;padding:8px 3px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.calendar-day.outside{background:transparent}
+.calendar-day:hover{background:var(--raised);border-color:var(--line)}
+.calendar-day.today .day-number{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.calendar-day[aria-pressed=true]{border-color:var(--red);background:color-mix(in srgb,var(--red) 10%,var(--surface));box-shadow:inset 0 0 0 1px var(--red)}
+.day-number{font-size:12px;font-weight:700}
+.calendar-markers{display:flex;flex-direction:column;gap:3px;width:100%;align-items:center}
+.marker{font-size:9px;line-height:1.35;border-radius:4px;padding:2px 4px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.marker.game{background:#e1061320;color:var(--accent)}
+.marker.practice{background:#408f8625;color:#8bd6ce}
+body[data-theme=light] .marker.practice{color:#216861}
+.marker.cancelled{background:var(--raised);color:var(--faint);text-decoration:line-through}
+.calendar-legend{display:flex;flex-wrap:wrap;gap:14px;padding:15px 18px 5px;font-size:10px;color:var(--muted)}
+.calendar-legend span{display:flex;align-items:center;gap:5px}
+.calendar-legend i{width:6px;height:6px;display:inline-block;border-radius:50%;background:var(--faint)}
+.calendar-legend i.game{background:var(--red)}.calendar-legend i.practice{background:#56a69b}
+.calendar-hint{font-size:10px;color:var(--faint);padding:5px 18px 15px;line-height:1.6}
+.calendar-list-toolbar{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:12px;justify-content:space-between;align-items:center}
+.calendar-list-toolbar strong{display:block;font-size:12px}
+.calendar-list-toolbar div>span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+.calendar-list-toolbar .text-button{font-size:10px;margin-left:5px;padding:0}
+.calendar-export-button{font-size:11px;padding:10px 12px;white-space:nowrap}
+.event-export{margin-top:12px;padding:6px 0;font-size:11px}
+.calendar-export-dialog h2:focus{outline:none}
+.export-kinds{display:flex;gap:25px;border:1px solid var(--line);border-radius:9px;padding:10px 15px 14px;margin:0 0 20px}
+.export-kinds legend{font-size:12px;font-weight:600;padding:0 6px}
+.export-kinds .checkbox-label{margin:0;font-size:13px}
+.calendar-export-dialog select{font-size:13px}
+.export-count{font-size:12px;font-weight:700;margin:20px 0 10px}
+.export-event-list{list-style:none;margin:0 0 20px;padding:0;max-height:190px;overflow-y:auto;border:1px solid var(--line);border-radius:9px}
+.export-event-list:empty{display:none}
+.export-event-list li{padding:10px 13px;font-size:12px}
+.export-event-list li+li{border-top:1px solid var(--line)}
+.export-event-list strong{display:block;font-weight:600;overflow-wrap:anywhere}
+.export-event-list span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+.calendar-export-dialog .form-error:not(:empty){margin-bottom:15px}
+.calendar-export-dialog .form-help{margin-bottom:12px}
+.calendar-import-help{font-size:11px;color:var(--muted)}
+.calendar-import-help summary{cursor:pointer;color:var(--accent);padding:5px 0}
+.calendar-import-help p{display:flex;flex-wrap:wrap;gap:14px;padding:7px 0}
+.calendar-import-help a{text-decoration:underline;text-underline-offset:3px}
+.calendar-export-dialog .preview-note{margin-top:16px;font-size:11px}
+@media(max-width:1100px){.marker-word{display:none}.marker{min-width:14px;text-align:center}.calendar-markers{flex-direction:row;justify-content:center;flex-wrap:wrap}.calendar-day{min-height:65px}}
+@media(min-width:761px) and (max-width:1000px){.calendar-list-toolbar{flex-direction:column;align-items:stretch}.calendar-export-button{width:100%}}
+@media(max-width:540px){.calendar-top{padding:14px 12px 8px}.calendar-top h3{font-size:17px}.calendar-weekdays,.calendar-grid{padding-left:7px;padding-right:7px}.calendar-weekdays span{font-size:9px}.calendar-day{min-height:60px;padding:6px 1px}.day-number{font-size:11px}.calendar-list-toolbar{padding:13px 12px;flex-direction:column;align-items:stretch;gap:11px}.calendar-export-button{width:100%}.calendar-legend{padding-left:12px;gap:12px}.calendar-hint{padding-left:12px;padding-right:12px}.calendar-export-dialog h2{font-size:24px}}
