@@ -41,7 +41,7 @@ let previewActive = false;
 const previewAccount = { email: "parker@example.com", roles: ["parent", "coach"] };
 let view = "public", selectedPlayer = "all", selectedKind = "all", coachPanel = "schedule", sequence = 10;
 const coachTeam = "bandits";
-const calendarState = { parent: { month: centralToday().slice(0, 7), date: "" }, coach: { month: centralToday().slice(0, 7), date: "" } };
+const calendarState = { parent: { month: centralToday().slice(0, 7), date: "", visible: true }, coach: { month: centralToday().slice(0, 7), date: "", visible: true } };
 let calendarExport = null;
 function day(date) { return new Date(`${date}T12:00:00`); }
 function formatDate(date, options = { weekday: "short", month: "short", day: "numeric" }) { return new Intl.DateTimeFormat("en-US", options).format(day(date)); }
@@ -226,6 +226,7 @@ function renderCalendar(portal, rows) {
   const state = calendarState[portal], today = centralToday();
   const label = formatDate(state.month + "-01", { month: "long", year: "numeric" });
   const headingId = portal + "MonthTitle";
+  const calendarId = portal + "CalendarView";
   const cells = monthCells(state.month).map(cell => {
     if (!cell.inMonth) return '<div class="calendar-day outside" aria-hidden="true"></div>';
     const onDay = rows.filter(e => e.date === cell.date);
@@ -237,7 +238,7 @@ function renderCalendar(portal, rows) {
   }).join("");
   const visibleRows = rows.filter(e => !state.date || e.date === state.date);
   const mount = portal === "parent" ? $("#familyCalendar") : $("#coachCalendar");
-  mount.innerHTML = `<div class="calendar-top"><h3 id="${headingId}" aria-live="polite">${escapeHtml(label)}</h3><div class="calendar-nav"><button type="button" class="text-button" data-calendar-action="today">Today</button><button type="button" class="small-button" data-calendar-action="previous" aria-label="Previous month">‹</button><button type="button" class="small-button" data-calendar-action="next" aria-label="Next month">›</button></div></div><div class="calendar-weekdays" aria-hidden="true">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => `<span>${d}</span>`).join("")}</div><div class="calendar-grid" role="group" aria-labelledby="${headingId}">${cells}</div><div class="calendar-legend"><span><i class="game"></i>Games</span><span><i class="practice"></i>Practices</span><span><i class="cancelled"></i>Cancelled</span></div><p class="calendar-hint">Select a day to filter the events below. All times are Central.</p><div class="calendar-list-toolbar"><div><strong>${state.date ? escapeHtml(formatDate(state.date)) : "All scheduled dates"}</strong><span>${visibleRows.length} event${visibleRows.length === 1 ? "" : "s"}${state.date ? ' <button type="button" class="text-button" data-calendar-action="clear">Clear date</button>' : ""}</span></div><button type="button" class="button outline calendar-export-button" data-export-calendar="${portal}"><span aria-hidden="true">＋</span>Add to my calendar</button></div>`;
+  mount.innerHTML = `<div class="calendar-visibility-toolbar"><span>Calendar view</span><button type="button" class="small-button calendar-visibility-toggle" data-calendar-action="toggle" aria-expanded="${state.visible}" aria-controls="${calendarId}">${state.visible ? "Hide calendar" : "Show calendar"}<span class="calendar-toggle-icon" aria-hidden="true">${state.visible ? "−" : "+"}</span></button></div><div id="${calendarId}" class="calendar-view" ${state.visible ? "" : "hidden"}><div class="calendar-top"><h3 id="${headingId}" aria-live="polite">${escapeHtml(label)}</h3><div class="calendar-nav"><button type="button" class="text-button" data-calendar-action="today">Today</button><button type="button" class="small-button" data-calendar-action="previous" aria-label="Previous month">‹</button><button type="button" class="small-button" data-calendar-action="next" aria-label="Next month">›</button></div></div><div class="calendar-weekdays" aria-hidden="true">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => `<span>${d}</span>`).join("")}</div><div class="calendar-grid" role="group" aria-labelledby="${headingId}">${cells}</div><div class="calendar-legend"><span><i class="game"></i>Games</span><span><i class="practice"></i>Practices</span><span><i class="cancelled"></i>Cancelled</span></div><p class="calendar-hint">Select a day to filter the events below. All times are Central.</p></div><div class="calendar-list-toolbar"><div><strong>${state.date ? escapeHtml(formatDate(state.date)) : "All scheduled dates"}</strong><span>${visibleRows.length} event${visibleRows.length === 1 ? "" : "s"}${state.date ? ' <button type="button" class="text-button" data-calendar-action="clear">Clear date</button>' : ""}</span></div><button type="button" class="button outline calendar-export-button" data-export-calendar="${portal}"><span aria-hidden="true">＋</span>Add to my calendar</button></div>`;
 }
 
 function renderActiveCalendar(portal) {
@@ -255,7 +256,11 @@ function setupCalendar(portal, selector) {
     if (date) state.date = state.date === date.dataset.calendarDate ? "" : date.dataset.calendarDate;
     else if (action) {
       const choice = action.dataset.calendarAction;
-      if (choice === "clear") state.date = "";
+      if (choice === "toggle") {
+        state.visible = !state.visible;
+        if (!state.visible) state.date = "";
+      }
+      else if (choice === "clear") state.date = "";
       else if (choice === "today") { state.month = centralToday().slice(0, 7); state.date = centralToday(); }
       else { state.month = shiftMonth(state.month, choice === "next" ? 1 : -1); state.date = ""; }
     } else return;

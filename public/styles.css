@@ -76,3 +76,11 @@ body[data-theme=light] .marker.practice{color:#216861}
 @media(max-width:1100px){.marker-word{display:none}.marker{min-width:14px;text-align:center}.calendar-markers{flex-direction:row;justify-content:center;flex-wrap:wrap}.calendar-day{min-height:65px}}
 @media(min-width:761px) and (max-width:1000px){.calendar-list-toolbar{flex-direction:column;align-items:stretch}.calendar-export-button{width:100%}}
 @media(max-width:540px){.calendar-top{padding:14px 12px 8px}.calendar-top h3{font-size:17px}.calendar-weekdays,.calendar-grid{padding-left:7px;padding-right:7px}.calendar-weekdays span{font-size:9px}.calendar-day{min-height:60px;padding:6px 1px}.day-number{font-size:11px}.calendar-list-toolbar{padding:13px 12px;flex-direction:column;align-items:stretch;gap:11px}.calendar-export-button{width:100%}.calendar-legend{padding-left:12px;gap:12px}.calendar-hint{padding-left:12px;padding-right:12px}.calendar-export-dialog h2{font-size:24px}}
+
+/* Keep the event list and export action available when the month is collapsed. */
+.calendar-visibility-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.calendar-visibility-toolbar>span{font-size:12px;font-weight:600;color:var(--muted)}
+.calendar-visibility-toggle{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;white-space:nowrap}
+.calendar-toggle-icon{font-size:18px;line-height:1;color:var(--accent);min-width:12px;text-align:center}
+.calendar-view[hidden]+.calendar-list-toolbar{border-top:0}
+@media(max-width:540px){.calendar-visibility-toolbar{padding:10px 12px}.calendar-visibility-toggle{padding:9px 11px}}
